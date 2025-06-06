@@ -1,0 +1,15 @@
+name: Simple-CI
+
+on:
+  push:
+    branches: '*'
+
+jobs:
+  build:
+    runs-on: windows-2019
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - name: Run a simple command
+        run: |
+          date

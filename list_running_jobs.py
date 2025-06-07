@@ -86,6 +86,8 @@ if __name__ == "__main__":
         token=token
     )
 
+    print(envs)
+
     env_names = [
         env['name']
         for env in envs['environments']

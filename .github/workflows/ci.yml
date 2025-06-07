@@ -42,6 +42,7 @@ jobs:
     # environment: ${{needs.get_env.outputs.env_name}}
     # concurrency:
     #   group: ${{needs.get_env.outputs.env_name}}
+    needs: get_env
     steps:
       - shell: bash
         run: |

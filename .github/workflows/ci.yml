@@ -19,6 +19,11 @@ jobs:
       env_name: ${{ steps.step_1.outputs.test }}
       env_var: ${{ steps.step_2.outputs.test }}
     steps:
+    - id: make
+      name: Install Make
+      run: |
+        sudo apt-get update
+        sudo apt-get -y install make
     - id: step_1
       run: echo "test=hello" >> "$GITHUB_OUTPUT"
     - id: step_2

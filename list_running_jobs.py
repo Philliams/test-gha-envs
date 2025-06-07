@@ -45,8 +45,6 @@ def get_active_runs(token):
             name_check = wf['name'] == "Simple-CI"
             status_check = wf['status'] != "completed"
 
-            print(name_check, status_check)
-
             if name_check and status_check:
                 active_workflows.append(wf)
             elif not status_check:

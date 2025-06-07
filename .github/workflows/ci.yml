@@ -14,3 +14,9 @@ jobs:
       - name: Run a simple command
         run: |
           date
+      - name: debug
+        run: |
+          echo ${{vars}}
+      - name: echo environment name
+        run: |
+          echo ${{vars.NAME}}

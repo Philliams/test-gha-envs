@@ -47,8 +47,9 @@ jobs:
       name: Generate environment locking artifact
       shell: bash
       run: |
-        echo "${{steps.env.outputs.env_name}}" > env.txt
-    - name: Create Environment artifact
+        echo "${{ steps.env.outputs.env_name }}" > env.txt
+    - id: upload
+      name: Create Environment artifact
       uses: actions/upload-artifact@v4
       with:
         name: env_manifest

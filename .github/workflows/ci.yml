@@ -8,9 +8,12 @@ jobs:
   get_env:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pull-requests: write
-      repository-projects: write
+      contents: read
+      actions: read
+      attestations: read
+      checks: read
+      deployments: read
+      statuses: read
     steps:
       - name: install make
         run: |

@@ -52,6 +52,14 @@ jobs:
       group: ${{needs.job1.outputs.env_name}}
       cancel-in-progress: false
     steps:
+    - shell: bash
+      run: |
+        echo "${{vars.NAME}}" > env.txt
+    - name: Create Environment artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: env_manifest
+        path: env.txt
     - run: echo ${{needs.job1.outputs.out1}} ${{needs.job1.outputs.out2}} ${{needs.job1.outputs.env_name}}
     - run: echo ${{vars.NAME}}
     - run: sleep 2m

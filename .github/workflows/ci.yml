@@ -27,7 +27,7 @@ jobs:
       - name: debugging
         run: |
           ls
-          make check-envs
+          echo ${{ secrets.GITHUB_TOKEN }} | python list_running_jobs.py
   # build:
   #   runs-on: windows-2019
   #   environment: env-1

@@ -41,7 +41,7 @@ jobs:
     - id: env
       name: Compute next available environment
       run: |
-        echo '$(python list_running_jobs.py ${{ secrets.GITHUB_TOKEN }})' >> "$GITHUB_OUTPUT"
+        python list_running_jobs.py ${{ secrets.GITHUB_TOKEN }} | xargs echo >> "$GITHUB_OUTPUT"
     - id: step_1
       run: echo "test=hello" >> "$GITHUB_OUTPUT"
     - id: step_2

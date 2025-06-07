@@ -10,6 +10,8 @@ jobs:
     environment: env-1
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
+    outputs:
+      var: ${{vars.NAME}}
     steps:
       - name: Run a simple command
         run: |

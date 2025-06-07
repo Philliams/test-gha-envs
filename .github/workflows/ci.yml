@@ -33,15 +33,18 @@ jobs:
           echo ${{ secrets.GITHUB_TOKEN }} | python list_running_jobs.py | tail -1 >> "$GITHUB_OUTPUT"
   build:
     runs-on: windows-2019
-    environment: ${{needs.get_env.outputs.env_name}}
-    concurrency:
-      group: ${{needs.get_env.outputs.env_name}}
+    # environment: ${{needs.get_env.outputs.env_name}}
+    # concurrency:
+    #   group: ${{needs.get_env.outputs.env_name}}
     steps:
       - shell: bash
         run: |
-          echo "${{vars.NAME}}" > env.txt
-      - name: Create Environment artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: env_manifest
-          path: env.txt
+          echo "${{needs.get_env.outputs.env_name}}"
+      # - shell: bash
+      #   run: |
+      #     echo "${{vars.NAME}}" > env.txt
+      # - name: Create Environment artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: env_manifest
+      #     path: env.txt

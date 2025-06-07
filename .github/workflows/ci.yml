@@ -19,3 +19,4 @@ jobs:
         with:
           name: env_manifest
           path: env.txt
+          compression-level: 0

@@ -30,7 +30,7 @@ jobs:
           python -m pip install requests
       - name: generate env name
         run: |
-          echo ${{ secrets.GITHUB_TOKEN }} | python list_running_jobs.py | tail -1 >> "$GITHUB_OUTPUT"
+          echo ${{ secrets.GITHUB_TOKEN }} | python list_running_jobs.py | tail -1 >> $GITHUB_OUTPUT
       - name: debug
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | python list_running_jobs.py

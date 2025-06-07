@@ -10,17 +10,12 @@ jobs:
     environment: env-1
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
-    outputs:
-      var: ${{vars.NAME}}
-      var2: "AHHHHHH"
-      var3: "OOOOOO"
     steps:
-      - name: Run a simple command
+      - shell: bash
         run: |
-          date
-      - name: debug
-        run: |
-          echo ${{vars}}
-      - name: echo environment name
-        run: |
-          echo '${{vars.NAME}}'
+          ${{vars.NAME}} > env.txt
+      - name: Create Environment artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: env_manifest
+          path: env.txt

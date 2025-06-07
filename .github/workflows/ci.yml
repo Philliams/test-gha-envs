@@ -43,21 +43,22 @@ jobs:
       name: Compute next available environment
       run: |
         python list_running_jobs.py ${{ secrets.GITHUB_TOKEN }} | xargs echo >> "$GITHUB_OUTPUT"
+    - id: step_1
+      run: echo "test=hello" >> "$GITHUB_OUTPUT"
+    - id: step_2
+      run: echo "test=world" >> "$GITHUB_OUTPUT"
     - id: artifact
       name: Generate environment locking artifact
       shell: bash
       run: |
-        echo "${{ steps.env.outputs.env_name }}" > env.txt
+        echo "${{ steps.step_1.outputs.test }}" > env.txt
     - id: upload
       name: Create Environment artifact
       uses: actions/upload-artifact@v4
       with:
         name: env_manifest
         path: env.txt
-    - id: step_1
-      run: echo "test=hello" >> "$GITHUB_OUTPUT"
-    - id: step_2
-      run: echo "test=world" >> "$GITHUB_OUTPUT"
+
   job2:
     runs-on: ubuntu-latest
     needs: job1

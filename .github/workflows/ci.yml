@@ -12,6 +12,8 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}
     outputs:
       var: ${{vars.NAME}}
+      var2: "AHHHHHH"
+      var3: "OOOOOO"
     steps:
       - name: Run a simple command
         run: |

@@ -8,4 +8,4 @@ if __name__ == "__main__":
     data = json.loads(data)
     print("Workflow Runs:")
     for workflow in data['workflow_runs']:
-        print(f"\t --  {workflow['name']} | {workflow['id']} | {workflow['status']}")
+        print(f"\t --  {workflow['name']} | {workflow['id']} | {workflow['status']} | {workflow['updated_at']}")

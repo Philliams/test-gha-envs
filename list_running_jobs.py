@@ -113,4 +113,4 @@ if __name__ == "__main__":
                 pass
 
     next_env_to_use = min(counts, key=counts.get)
-    print(f"env_name={next_env_to_use}")
+    print(f"\"env_name={next_env_to_use}\"")

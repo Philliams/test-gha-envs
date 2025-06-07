@@ -1,8 +1,6 @@
 name: Simple-CI
 
 on: workflow_dispatch
-push:
-  branches: '*'
 
 jobs:
   job1:

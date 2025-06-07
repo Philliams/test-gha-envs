@@ -45,6 +45,8 @@ def get_active_runs(token):
             name_check = wf['name'] == "Simple-CI"
             status_check = wf['status'] != "completed"
 
+            print(name_check, status_check)
+
             if name_check and status_check:
                 active_workflows.append(wf)
             elif not status_check:
@@ -97,19 +99,17 @@ if __name__ == "__main__":
 
     active_wfs = get_active_runs(token)
 
+    print([(e['name'], e['id']) for e in active_wfs])
+
     counts = {e: 0 for e in env_names}
 
 
     for workflow in active_wfs:
-        name_check = workflow['name'] == "Simple-CI"
-        status_check = workflow['status'] == "completed"
-
-        if name_check and status_check:
-            try:
-                env_name = retrieve_artifact(workflow['artifacts_url'], token)
-                counts[env_name] += 1
-            except Exception as e:
-                pass
+        try:
+            env_name = retrieve_artifact(workflow['artifacts_url'], token)
+            counts[env_name] += 1
+        except Exception as e:
+            pass
 
     next_env_to_use = min(counts, key=counts.get)
     print(f"\"env_name={next_env_to_use}\"")

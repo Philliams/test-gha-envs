@@ -5,53 +5,73 @@ on:
     branches: '*'
 
 jobs:
-  get_env:
+  job1:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      actions: read
-      attestations: read
-      checks: read
-      deployments: read
-      statuses: read
+    # Expose step outputs as job outputs
     outputs:
-      output2: ${{ steps.gen-env.outputs.env_name }}
+      output1: ${{ steps.step1.outputs.test }}
+      output2: ${{ steps.step2.outputs.test }}
     steps:
-      - name: install make
-        run: |
-          sudo apt-get update
-          sudo apt-get -y install make
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.12
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install requests
-      - name: generate env name
-        id: gen-env
-        run: |
-          echo ${{ secrets.GITHUB_TOKEN }} | python list_running_jobs.py | tail -1 >> $GITHUB_OUTPUT
-      - name: debug
-        run: |
-          echo ${{ secrets.GITHUB_TOKEN }} | python list_running_jobs.py
-  build:
-    runs-on: windows-2019
-    # environment: ${{needs.get_env.outputs.env_name}}
-    # concurrency:
-    #   group: ${{needs.get_env.outputs.env_name}}
-    needs: get_env
+    - id: step1
+      run: echo "test=hello" >> "$GITHUB_OUTPUT"
+    - id: step2
+      run: echo "test=world" >> "$GITHUB_OUTPUT"
+  job2:
+    runs-on: ubuntu-latest
+    needs: job1
     steps:
-      - shell: bash
-        run: |
-          echo "${{needs.get_env.outputs.env_name}}"
-      # - shell: bash
-      #   run: |
-      #     echo "${{vars.NAME}}" > env.txt
-      # - name: Create Environment artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: env_manifest
-      #     path: env.txt
+    - run: echo ${{needs.job1.outputs.output1}} ${{needs.job1.outputs.output2}}
+
+
+
+# jobs:
+#   get_env:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: read
+#       actions: read
+#       attestations: read
+#       checks: read
+#       deployments: read
+#       statuses: read
+#     outputs:
+#       output2: ${{ steps.gen-env.outputs.env_name }}
+#     steps:
+#       - name: install make
+#         run: |
+#           sudo apt-get update
+#           sudo apt-get -y install make
+#       - uses: actions/checkout@v2
+#       - name: Set up Python 3.12
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: 3.12
+#       - name: Install dependencies
+#         run: |
+#           python -m pip install --upgrade pip
+#           python -m pip install requests
+#       - name: generate env name
+#         id: gen-env
+#         run: |
+#           echo ${{ secrets.GITHUB_TOKEN }} | python list_running_jobs.py | tail -1 >> $GITHUB_OUTPUT
+#       - name: debug
+#         run: |
+#           echo ${{ secrets.GITHUB_TOKEN }} | python list_running_jobs.py
+#   build:
+#     runs-on: windows-2019
+#     # environment: ${{needs.get_env.outputs.env_name}}
+#     # concurrency:
+#     #   group: ${{needs.get_env.outputs.env_name}}
+#     needs: get_env
+#     steps:
+#       - shell: bash
+#         run: |
+#           echo "${{needs.get_env.outputs.env_name}}"
+#       # - shell: bash
+#       #   run: |
+#       #     echo "${{vars.NAME}}" > env.txt
+#       # - name: Create Environment artifact
+#       #   uses: actions/upload-artifact@v4
+#       #   with:
+#       #     name: env_manifest
+#       #     path: env.txt

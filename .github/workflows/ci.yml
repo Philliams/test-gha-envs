@@ -5,17 +5,38 @@ on:
     branches: '*'
 
 jobs:
-  build:
-    runs-on: windows-2019
-    environment: env-1
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+  get_env:
+    runs-on: ubuntu-latest
     steps:
-      - shell: bash
+      - name: install make
         run: |
-          echo "${{vars.NAME}}" > env.txt
-      - name: Create Environment artifact
-        uses: actions/upload-artifact@v4
+          sudo apt-get update
+          sudo apt-get -y install make
+      - name: checkout repo content
+        uses: actions/checkout@v2
+      - name: setup python
+        uses: actions/setup-python@v2
         with:
-          name: env_manifest
-          path: env.txt
+        - name: Install dependencies
+          python-version: 3.12 #install the python needed
+          run: |
+            python -m pip install --upgrade pip
+            pip install requests
+      - name: debugging
+        run: |
+          ls
+          make check-envs
+  # build:
+  #   runs-on: windows-2019
+  #   environment: env-1
+  #   concurrency:
+  #     group: ${{ github.workflow }}-${{ github.ref }}
+  #   steps:
+  #     - shell: bash
+  #       run: |
+  #         echo "${{vars.NAME}}" > env.txt
+  #     - name: Create Environment artifact
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: env_manifest
+  #         path: env.txt

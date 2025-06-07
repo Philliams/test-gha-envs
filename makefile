@@ -4,7 +4,7 @@ gha-runs:
 	@gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" repos/Philliams/test-gha-envs/actions/runs
 
 check-envs:
-	gh auth token | python list_running_jobs.py
+	@gh auth token | python list_running_jobs.py
 
 status:
 	make gha-runs | jq ".workflow_runs[] | (.id|tostring) + \" - \" +  .name + \" - \" + .status + \" - \" + .artifacts_url"
@@ -23,9 +23,6 @@ artifacts:
 	| jq ".artifacts[0].archive_download_url" \
 	| xargs -L1 | tr -d "\r" \
 	| xargs -I {} gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" {}
-
-	
-
 
 
 gha-wf-run:

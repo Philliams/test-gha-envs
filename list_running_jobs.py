@@ -79,25 +79,24 @@ def retrieve_artifact(artifacts_url, token):
 
 # main
 if __name__ == "__main__":
-    token = sys.stdin.read().replace("\n", "")
+    token = sys.argv[1]
 
     envs = make_request(
   	    url="https://api.github.com/repos/Philliams/test-gha-envs/environments",
         token=token
     )
 
-    print(envs)
+    # print(envs)
 
     env_names = [
         env['name']
         for env in envs['environments']
     ]
 
-    print(env_names)
+    # print(env_names)
 
     active_wfs = get_active_runs(token)
 
-    # print(active_wfs)
     counts = {e: 0 for e in env_names}
 
 

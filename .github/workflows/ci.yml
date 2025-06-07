@@ -19,4 +19,4 @@ jobs:
           echo ${{vars}}
       - name: echo environment name
         run: |
-          echo ${{vars.NAME}}
+          echo '${{vars.NAME}}'

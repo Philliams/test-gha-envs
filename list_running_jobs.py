@@ -33,7 +33,7 @@ def get_active_runs(token):
             url="https://api.github.com/repos/Philliams/test-gha-envs/actions/runs",
             token=token,
             params={
-                "per_page": 2,
+                "per_page": 5,
                 "page": page
             }
         )
@@ -43,7 +43,7 @@ def get_active_runs(token):
 
         for wf in workflows['workflow_runs']:
             name_check = wf['name'] == "Simple-CI"
-            status_check = wf['status'] == "completed"
+            status_check = wf['status'] != "completed"
 
             if name_check and status_check:
                 active_workflows.append(wf)

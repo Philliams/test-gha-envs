@@ -99,8 +99,6 @@ if __name__ == "__main__":
 
     active_wfs = get_active_runs(token)
 
-    print([(e['name'], e['id']) for e in active_wfs])
-
     counts = {e: 0 for e in env_names}
 
 

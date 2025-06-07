@@ -103,9 +103,12 @@ if __name__ == "__main__":
     for workflow in active_wfs:
         try:
             env_name = retrieve_artifact(workflow['artifacts_url'], token)
+            print(env_name)
             counts[env_name] += 1
         except Exception as e:
             pass
+
+    print(counts)
 
     next_env_to_use = min(counts, key=counts.get)
     print(f"\"env_name={next_env_to_use}\"")

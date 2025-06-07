@@ -51,7 +51,7 @@ jobs:
       name: Generate environment locking artifact
       shell: bash
       run: |
-        echo "${{ steps.step_1.outputs.test }}" > env.txt
+        echo "${{ steps.env.outputs.env_name }}" > env.txt
     - id: upload
       name: Create Environment artifact
       uses: actions/upload-artifact@v4
